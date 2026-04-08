@@ -3,50 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Levels</title>
+<title>Beater Levels</title>
 <link rel="manifest" href="manifest.json">
+
 <style>
-body{font-family:system-ui,-apple-system,sans-serif;background:#0f1115;color:white;display:flex;flex-direction:column;align-items:center;margin:0;padding:20px;}
-.card{background:#171a21;padding:20px;border-radius:20px;width:95%;max-width:450px;box-shadow:0 10px 30px rgba(0,0,0,0.5);margin-bottom:20px;}
-.title{font-size:24px;text-align:center;margin-bottom:10px;}
+body{
+  font-family:system-ui,-apple-system,sans-serif;
+  background:#0f1115;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  margin:0;
+  padding:20px;
+}
+
+.card{
+  background:#171a21;
+  padding:20px;
+  border-radius:20px;
+  width:95%;
+  max-width:450px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  margin-bottom:20px;
+}
+
+/* 🔥 Новый красивый header */
+.app-header{
+  background: linear-gradient(135deg,#6ee7ff,#8b5cf6);
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:15px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+.app-header h1{
+  margin:0;
+  font-size:26px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.subtitle{
+  margin:5px 0 0;
+  font-size:13px;
+  opacity:0.8;
+}
+
 .level{font-size:36px;text-align:center;}
 .bar{height:12px;background:#2a2f3a;border-radius:10px;overflow:hidden;margin:10px 0;}
 .progress{height:100%;background:linear-gradient(90deg,#6ee7ff,#8b5cf6);width:0%;transition:.3s;}
+
 .task{display:flex;align-items:center;justify-content:space-between;margin:8px 0;}
+
 button{border:none;border-radius:12px;cursor:pointer;}
-.plus{width:48px;height:48px;font-size:26px;color:white;background:linear-gradient(135deg,#6ee7ff,#8b5cf6);transition:transform .15s, box-shadow .15s;box-shadow:0 4px 15px rgba(0,0,0,.4);}
+
+.plus{
+  width:48px;height:48px;font-size:26px;color:white;
+  background:linear-gradient(135deg,#6ee7ff,#8b5cf6);
+  transition:transform .15s, box-shadow .15s;
+  box-shadow:0 4px 15px rgba(0,0,0,.4);
+}
 .plus:active{transform:scale(1.25);box-shadow:0 0 20px #8b5cf6;}
+
 .edit{background:#2a2f3a;color:white;padding:6px 10px;margin-left:6px;}
-.addBtn{background:linear-gradient(135deg,#6ee7ff,#8b5cf6);color:white;padding:10px 14px;border-radius:10px;margin-left:8px;}
+
+.addBtn{
+  background:linear-gradient(135deg,#6ee7ff,#8b5cf6);
+  color:white;padding:10px 14px;border-radius:10px;margin-left:8px;
+}
+
 input{flex:1;padding:8px;border-radius:10px;border:none;}
+
 .small{opacity:.5;font-size:12px;cursor:pointer;text-align:right;}
 .streak{text-align:center;margin-bottom:8px;}
+
 .nav{text-align:center;margin-top:10px;}
 .nav a{color:#8b5cf6;text-decoration:none;}
 </style>
 </head>
+
 <body>
 
 <div class="card">
-<div class="title">Beater Levels</div>
-<div class="streak" id="streak"></div>
-<div class="level" id="level"></div>
-<div id="xp"></div>
-<div class="bar"><div class="progress" id="progress"></div></div>
-<div class="small" onclick="editXP()">edit xp</div>
+
+  <div class="app-header">
+    <h1>Beater Levels</h1>
+    <p class="subtitle">Level up your life</p>
+  </div>
+
+  <div class="streak" id="streak"></div>
+  <div class="level" id="level"></div>
+  <div id="xp"></div>
+  <div class="bar"><div class="progress" id="progress"></div></div>
+  <div class="small" onclick="editXP()">edit xp</div>
 </div>
 
 <div class="card">
-<div class="title">Tasks</div>
-<div id="tasks"></div>
-<div style="display:flex;margin-top:10px;">
-<input id="newTask" placeholder="New task">
-<button class="addBtn" onclick="addTask()">Add</button>
-</div>
+  <div style="text-align:center;font-size:20px;margin-bottom:10px;">Tasks</div>
+  <div id="tasks"></div>
+
+  <div style="display:flex;margin-top:10px;">
+    <input id="newTask" placeholder="New task">
+    <button class="addBtn" onclick="addTask()">Add</button>
+  </div>
 </div>
 
 <div class="nav">
-<a href="stats.html">Statistics</a>
+  <a href="stats.html">Statistics</a>
 </div>
 
 <script>
