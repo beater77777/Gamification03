@@ -3,17 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Levels Stats</title>
+<title>Beater Levels Stats</title>
+
 <style>
-body{font-family:system-ui;background:#0f1115;color:white;text-align:center;margin:0;padding:20px;}
-canvas{background:#171a21;border-radius:20px;padding:10px;}
+body{
+  font-family:system-ui;
+  background:#0f1115;
+  color:white;
+  text-align:center;
+  margin:0;
+  padding:20px;
+}
+
+.app-header{
+  background: linear-gradient(135deg,#6ee7ff,#8b5cf6);
+  padding:15px;
+  border-radius:20px;
+  margin-bottom:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}
+
+canvas{
+  background:#171a21;
+  border-radius:20px;
+  padding:10px;
+}
+
 a{color:#8b5cf6;text-decoration:none;}
 </style>
 </head>
+
 <body>
 
+<div class="app-header">
+  <h1>Beater Levels</h1>
+</div>
+
 <h2>Daily XP</h2>
+
 <canvas id="chart" width="350" height="200"></canvas>
+
 <br><br>
 <a href="index.html">Back</a>
 
