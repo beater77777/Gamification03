@@ -81,7 +81,7 @@ input{flex:1;padding:8px;border-radius:10px;border:none;}
 .nav{text-align:center;margin-top:10px;}
 .nav a{color:#8b5cf6;text-decoration:none;}
 
-/* 🔥 FX */
+/* FX */
 #fx-container{
   position:fixed;
   top:0;
@@ -107,6 +107,22 @@ input{flex:1;padding:8px;border-radius:10px;border:none;}
   100%{transform:translate(-50%,-80px) scale(1.4);opacity:0;}
 }
 
+/* 🔥 LEVEL UP */
+.level-up{
+  position:absolute;
+  font-size:42px;
+  font-weight:900;
+  color:#ffd700;
+  text-shadow:0 0 20px #ffea00, 0 0 40px #ffae00;
+  animation:levelUpAnim 1s ease-out forwards;
+}
+
+@keyframes levelUpAnim{
+  0%{transform:translate(-50%,0) scale(0.5);opacity:0;}
+  30%{opacity:1;}
+  100%{transform:translate(-50%,-120px) scale(1.6);opacity:0;}
+}
+
 .particle{
   position:absolute;
   width:6px;
@@ -119,6 +135,11 @@ input{flex:1;padding:8px;border-radius:10px;border:none;}
 @keyframes explode{
   0%{transform:translate(0,0);opacity:1;}
   100%{transform:translate(var(--x),var(--y));opacity:0;}
+}
+
+/* золотые частицы */
+.gold{
+  background:#ffd700;
 }
 </style>
 </head>
@@ -152,7 +173,6 @@ input{flex:1;padding:8px;border-radius:10px;border:none;}
   <a href="stats.html">Statistics</a>
 </div>
 
-<!-- FX контейнер -->
 <div id="fx-container"></div>
 
 <script>
@@ -206,6 +226,39 @@ function spawnXP(x,y){
   }
 }
 
+/* 🔥 LEVEL UP эффект */
+function spawnLevelUp(x,y){
+  let container = document.getElementById("fx-container");
+
+  let el = document.createElement("div");
+  el.className="level-up";
+  el.innerText="UP!";
+  el.style.left = x+"px";
+  el.style.top = y+"px";
+  container.appendChild(el);
+  setTimeout(()=>el.remove(),1000);
+
+  // золотые частицы
+  for(let i=0;i<20;i++){
+    let p=document.createElement("div");
+    p.className="particle gold";
+
+    let angle=Math.random()*Math.PI*2;
+    let dist=60+Math.random()*60;
+
+    let dx=Math.cos(angle)*dist+"px";
+    let dy=Math.sin(angle)*dist+"px";
+
+    p.style.left=x+"px";
+    p.style.top=y+"px";
+    p.style.setProperty("--x",dx);
+    p.style.setProperty("--y",dy);
+
+    container.appendChild(p);
+    setTimeout(()=>p.remove(),700);
+  }
+}
+
 function update(){
 let level=Math.floor(data.xp/5);
 document.getElementById("level").innerText="Level "+level;
@@ -231,6 +284,8 @@ save();
 }
 
 function addXP(i,event){
+let prevLevel = Math.floor(data.xp/5);
+
 data.xp++;
 data.tasks[i].count++;
 
@@ -239,6 +294,13 @@ let x = rect.left + rect.width/2;
 let y = rect.top;
 
 spawnXP(x,y);
+
+let newLevel = Math.floor(data.xp/5);
+
+/* если уровень вырос */
+if(newLevel > prevLevel){
+  spawnLevelUp(window.innerWidth/2, window.innerHeight/2);
+}
 
 if(!data.days[today]) data.days[today]=0;
 data.days[today]++;
