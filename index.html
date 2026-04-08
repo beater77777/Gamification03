@@ -44,6 +44,14 @@ body{
   letter-spacing:1px;
 }
 
+.xp-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  opacity:0.8;
+  margin-bottom:4px;
+}
+
 .subtitle{
   margin:5px 0 0;
   font-size:13px;
@@ -51,7 +59,36 @@ body{
 }
 
 .level{font-size:36px;text-align:center;}
-.bar{height:12px;background:#2a2f3a;border-radius:10px;overflow:hidden;margin:10px 0;}
+.bar{
+  height:12px;
+  background:#2a2f3a;
+  border-radius:10px;
+  overflow:hidden;
+  margin:10px 0;
+  position:relative;
+}
+.segments{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:space-between;
+  pointer-events:none;
+}
+
+.segments::before,
+.segments::after{
+  content:"";
+}
+
+.segments div{
+  width:1px;
+  height:100%;
+  background:rgba(255,255,255,0.2);
+}
+
 .progress{height:100%;background:linear-gradient(90deg,#6ee7ff,#8b5cf6);width:0%;transition:.3s;}
 
 .task{display:flex;align-items:center;justify-content:space-between;margin:8px 0;}
@@ -180,8 +217,12 @@ input{flex:1;padding:8px;border-radius:10px;border:none;}
 
   <div class="streak" id="streak"></div>
   <div class="level" id="level"></div>
-  <div id="xp"></div>
-  <div class="bar"><div class="progress" id="progress"></div></div>
+  <div class="xp-row" id="xpRow"></div>
+  <div class="bar">
+  <div class="progress" id="progress"></div>
+  <div class="segments"></div>
+</div>
+
   <div class="small" onclick="editXP()">edit xp</div>
 </div>
 
@@ -266,7 +307,13 @@ function spawnXP(x,y){
 function update(){
 let level=Math.floor(data.xp/5);
 document.getElementById("level").innerText="Level "+level;
-document.getElementById("xp").innerText=data.xp+" XP";
+
+let current = data.xp;
+let nextLevelXP = (Math.floor(data.xp/5)+1)*5;
+
+document.getElementById("xpRow").innerText = current + " → " + nextLevelXP;
+
+
 document.getElementById("progress").style.width=((data.xp%5)/5*100)+"%";
 document.getElementById("streak").innerText="🔥 "+streakCount()+" days";
 
@@ -345,7 +392,15 @@ update();
 }
 }
 
-update();
+update(); 
+  
+let seg = document.querySelector(".segments");
+seg.innerHTML = "";
+
+for(let i=1;i<5;i++){
+  let line = document.createElement("div");
+  seg.appendChild(line);
+}
 
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
 </script>
